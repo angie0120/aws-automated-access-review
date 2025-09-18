@@ -164,17 +164,17 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 This project forced me to go beyond deployment and into real AWS troubleshooting.
 
-### AWS Security Services
+### AWS security services
 
 - IAM Access Analyzer only works if an analyzer exists.
 - Findings are not retroactive. You must re-run Lambda after config changes.
 - CloudTrail must log all management events for useful results.
 
-### Serverless architecture & DevOps
+### Serverless architecture & devops
 
 - IaC (CloudFormation) saved me hours during re-testing.
 - CloudWatch Logs are essential to debug:
-    - Empty findings
+    - empty findings
     - SES email failures
     - Bedrock integration errors
 
@@ -203,6 +203,6 @@ If you’d like to try it yourself:
 
 Original project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
 
-Big thanks to the original author for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
+Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 
 ---

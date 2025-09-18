@@ -141,8 +141,8 @@ All of this is fully automated and there's no need to log into the console once 
 These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
-- PowerShell errors with ./scripts/deploy.sh.
-- Fix: I installed and used Use Git Bash on Windows.
+- Bash commands like ```./scripts/deploy.sh``` won’t work in PowerShell and will throw an error.
+- Fix: I installed and used [```Git Bash```](https://git-scm.com/download/win) on Windows.   
 
 #### 2. Bedrock model mismatch.
 - The original code used an outdated model ID (claude-v2) which failed silently.

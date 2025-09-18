@@ -113,7 +113,7 @@ Each module handles one specific task.
 
 ### 3. Amazon Bedrock (AI-generated summary)
 
-The AI summary process is handles by the [```bedrock_integration.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module. Here's what it does:
+The AI summary process is handled by the [```bedrock_integration.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module. Here's what it does:
 
 - Formats findings into a text prompt.
 - Sends it to the AI model (Claude 3 Haiku).

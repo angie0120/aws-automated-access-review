@@ -196,13 +196,13 @@ If you’d like to try it yourself:
     -  Configure CloudTrail to log all management events.
 4. Check CloudWatch Logs after deployment to confirm everything is working.
 
+#### If you’re just starting out, don’t be discouraged by errors. Every problem I hit taught me something new.
+
 ---
 
 ## Resources
 
 Original project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
-
-If you’re just starting out, don’t be discouraged by errors. Every problem I hit taught me something new.
 
 Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 

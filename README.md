@@ -39,7 +39,7 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide).
 
-#### Output formats:
+#### Examples of output after deploying code:
 
 <details> <summary> <strong>Sample AI-generated output (sent via email)</strong> (click to expand)</summary>
 
@@ -67,7 +67,7 @@ Once you understand these, the rest falls into place.
 
 ### 1. AWS CloudFormation (IaC)
 
-Instead of manually creating AWS resources, CloudFormation defines everything in a YAML template named ```access-review-real.yaml```. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
+Instead of manually creating AWS resources, CloudFormation defines everything in the YAML template named ```access-review-real.yaml```. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
 
 CloudFormation automatically sets up the:
 - Lambda function
@@ -80,11 +80,8 @@ Benefit of CloudFormation: repeatable deployments with no manual setup.
 
 ### 2. AWS Lambda (how the code runs)
 
-The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function:
+The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: ```def handler(event, context):```
 
-```python
-def handler(event, context):
-```
 Every time the Lamda runs, it:
 1. collects security data from IAM, CloudTrail, and Security Hub.
 2. generates a CSV report.
@@ -97,7 +94,7 @@ Every time the Lamda runs, it:
 #### Lamda "helper" modules:
 The ```index.py``` file doesn’t do all the work by itself. It uses "helper" modules from the [```/modules```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
 Each module handles one specific task. 
-<details> <summary>Here’s what they do: (click to expand)</summary>
+<details> <summary>Here’s what the "helper" modules do: (click to expand)</summary>
 
 | Module                        | What it does                                            |
 | ----------------------------- | ------------------------------------------------------- |
@@ -142,10 +139,10 @@ These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
 - Bash commands like ```./scripts/deploy.sh``` won’t work in PowerShell and will throw an error.
-- Fix: I installed and used [```Git Bash```](https://git-scm.com/download/win) on Windows.   
+- Fix: I installed [```Git Bash```](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
 
 #### 2. Bedrock model mismatch.
-- The original code used an outdated model ID (claude-v2) which failed silently.
+- The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).
 - Fix: I updated the model ID in `bedrock_integration.py` to Claude 3 Haiku model.
 
 #### 3. Lambda logging can be misleading sometimes.
@@ -191,7 +188,7 @@ If you’d like to try it yourself:
 1. Clone the original repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
 2. Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) in that repo.
 3. Apply these beginner fixes:
-    - Use Git Bash on Windows.
+    - Install Git Bash if you’re on Windows.
     - Create an IAM Access Analyzer first.
     -  Update Bedrock model ID to Claude 3 Haiku.
     -  Configure CloudTrail to log all management events.

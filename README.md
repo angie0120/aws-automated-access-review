@@ -5,7 +5,7 @@
 ## Table of contents
 - [About this project](#about-this-project)
 - [Logic flowchart](#logic-flowchart)
-- [Setup and report output](#setup-and-report-output---quick-overview)
+- [Setup and report output](#setup-and-report-output)
 - [Core building blocks](#core-building-blocks---what-makes-this-project-work)
 - [How it all fits together](#how-it-all-fits-together)
 - [Key challenges](#key-challenges-and-fixes)
@@ -35,7 +35,7 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 ---
 
-## Setup and report output - quick overview
+## Setup and report output
 
 Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide).
 
@@ -69,7 +69,7 @@ Once you understand these, the rest falls into place.
 
 ### 1. AWS CloudFormation (IaC)
 
-Instead of manually creating AWS resources, CloudFormation defines everything in the YAML template named ```access-review-real.yaml```. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
+Instead of manually creating AWS resources, CloudFormation defines everything in the YAML template named `access-review-real.yaml`. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
 
 CloudFormation automatically sets up the:
 - Lambda function
@@ -82,7 +82,7 @@ Benefit of CloudFormation: repeatable deployments with no manual setup.
 
 ### 2. AWS Lambda (how the code runs)
 
-The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: ```def handler(event, context):```
+The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: ```def handler(event, context):```
 
 Every time the Lambda runs, it:
 1. collects security data from IAM, CloudTrail, and Security Hub.
@@ -91,7 +91,7 @@ Every time the Lambda runs, it:
 4. calls Amazon Bedrock for AI summary.
 5. sends email via SES.
 
-#### If you're new to Lambda, read ```index.py``` from top to bottom, then follow how it imports and calls "helper" modules.
+#### If you're new to Lambda, read 'index.py' from top to bottom, then follow how it imports and calls "helper" modules.
 
 #### Lambda "helper" modules:
 The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [```/modules```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
@@ -129,7 +129,7 @@ This makes reports useful for non-technical readers or executives who need high-
 2. AWS creates all the needed infrastructure for you.
 3. The Lambda function runs on a schedule.
 4. It collects data, generates a report, uses AI to summarize, uploads to S3 and emails the result.
-5. Emails the report to stakeholders via SES.
+5. The report is emailed to stakeholders via SES.
 
 All of this is fully automated and there's no need to log into the console once it's deployed.
 
@@ -141,19 +141,19 @@ These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
 - Bash commands like ```./scripts/deploy.sh``` won’t work in PowerShell and will throw an error.
-- Fix: I installed [```Git Bash```](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
+- **Fix**: I installed [```Git Bash```](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
 
 #### 2. Bedrock model mismatch.
 - The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).
-- Fix: I updated the model ID in `bedrock_integration.py` to Claude 3 Haiku model.
+- **Fix**: I updated the model ID in `bedrock_integration.py` to Claude 3 Haiku model.
 
 #### 3. Lambda logging can be misleading sometimes.
 - Lambda logs initially showed “IAM Access Analyzer findings collected” even when no findings were returned due to missing analyzer configuration. This required careful reading of both CloudWatch logs and the generated report to discover the inconsistency.
-- Fix: I manually created an external access analyzer.
+- **Fix**: I manually created an external access analyzer.
 
-#### 4. CloudTrail incomplete findings.
+#### 4. CloudTrail returned incomplete findings.
 - Only write operations were tracked which led to incomplete findings from the CloudTrail module.
-- Fix: I reconfigured CloudTrail to log all management events for more complete analysis.
+- **Fix**: I reconfigured CloudTrail to log all management events for more complete analysis.
 
 With these fixes, my deployment succeeded: reports generated, uploaded to S3, summarized by Bedrock, and emailed via SES.
 
@@ -200,7 +200,9 @@ If you’d like to try it yourself:
 ## Resources
 
 Original project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
+
 If you’re just starting out, don’t be discouraged by errors. Every problem I hit taught me something new.
+
 Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 
 ---

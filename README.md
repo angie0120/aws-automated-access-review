@@ -4,7 +4,7 @@
 
 ## Table of contents
 - [About this project](#about-this-project)
-- [Logic flow](#logic-flow)
+- [Logic flowchart](#logic-flowchart)
 - [Setup and report output](#setup-and-report-output---quick-overview)
 - [Core building blocks](#core-building-blocks---what-makes-this-project-work)
 - [How it all fits together](#how-it-all-fits-together)
@@ -29,7 +29,7 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 ---
 
-## Logic Flow
+## Logic Flowchart
 
 ![flowchart](./assets/automated-access-review.png)
 
@@ -59,9 +59,9 @@ Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automate
 
 If you’re new to AWS, focus on these 3 AWS services first:
 
-1. AWS CloudFormation: sets up the infrastructure (IaC).
-2. AWS Lambda: runs the logic (serverless code execution).
-3. Amazon Bedrock: generates human-readable AI summaries.
+1. **AWS CloudFormation**: sets up the infrastructure (IaC).
+2. **AWS Lambda**: runs the logic (serverless code execution).
+3. **Amazon Bedrock**: generates human-readable AI summaries.
 
 Once you understand these, the rest falls into place.
 

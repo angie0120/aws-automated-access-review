@@ -75,14 +75,14 @@ CloudFormation automatically sets up the:
 - Lambda function
 - IAM roles & permissions
 - S3 bucket (for CSV reports)
-- SES configuration (for emails)
+- Amazon SES configuration (for emails)
 - CloudWatch scheduled trigger (runs every 30 days)
 
 Benefit of CloudFormation: repeatable deployments with no manual setup.
 
 ### 2. AWS Lambda (how the code runs)
 
-The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: ```def handler(event, context):```
+The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: `def handler(event, context):`
 
 Every time the Lambda runs, it:
 1. collects security data from IAM, CloudTrail, and Security Hub.
@@ -91,10 +91,10 @@ Every time the Lambda runs, it:
 4. calls Amazon Bedrock for AI summary.
 5. sends email via SES.
 
-#### If you're new to Lambda, read 'index.py' from top to bottom, then follow how it imports and calls "helper" modules.
+#### If you're new to Lambda, read `index.py` from top to bottom, then follow how it imports and calls "helper" modules.
 
 #### Lambda "helper" modules:
-The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [```/modules```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
+The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [`/modules`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
 Each module handles one specific task. 
 <details> <summary>Here’s what the "helper" modules do: (click to expand)</summary>
 
@@ -112,11 +112,11 @@ Each module handles one specific task.
 
 ### 3. Amazon Bedrock (AI-generated summary)
 
-The AI summary process is handled by the [```bedrock_integration.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module. Here's what it does:
+The AI summary process is handled by the [`bedrock_integration.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module. Here's what it does:
 
 - Formats findings into a text prompt.
 - Sends it to the AI model (Claude 3 Haiku).
-- Returns an easy to read summary.
+- Returns an easy-to-read summary.
 - Falls back to a default if Bedrock fails.
 
 This makes reports useful for non-technical readers or executives who need high-level insights, not raw CSVs.
@@ -140,8 +140,8 @@ All of this is fully automated and there's no need to log into the console once 
 These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
-- Bash commands like ```./scripts/deploy.sh``` won’t work in PowerShell and will throw an error.
-- **Fix**: I installed [```Git Bash```](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
+- Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
+- **Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
 
 #### 2. Bedrock model mismatch.
 - The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).
@@ -165,7 +165,8 @@ This project forced me to go beyond deployment and into real AWS troubleshooting
 
 ### AWS security services
 
-- IAM Access Analyzer only starts working after you set it up. It doesn’t look back at old data. So if you change its settings, remember to re-run the Lambda.
+- IAM Access Analyzer only starts working after you set it up.
+- IAM Access Analyzer doesn’t look back at old data. So if you change its settings, remember to re-run the Lambda.
 - CloudTrail must log all management events for useful results.
 
 ### Serverless architecture & devops

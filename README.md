@@ -39,6 +39,8 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide).
 
+Don’t worry if the Quick Start Guide feels intimidating. I’ll highlight the beginner pitfalls I hit later in this README.
+
 #### Examples of output after deploying code:
 
 <details> <summary> <strong>Sample AI-generated output (sent via email)</strong> (click to expand)</summary>
@@ -47,7 +49,7 @@ Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automate
 
 </details>
 
-<details> <summary> <strong>Sample CSV output</strong> (click to expand)</summary>
+<details> <summary> <strong>Sample CSV output (also sent via email)</strong> (click to expand)</summary>
 
 ![CSVreport](./assets/csv-report.png)
 
@@ -82,17 +84,17 @@ Benefit of CloudFormation: repeatable deployments with no manual setup.
 
 The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: ```def handler(event, context):```
 
-Every time the Lamda runs, it:
+Every time the Lambda runs, it:
 1. collects security data from IAM, CloudTrail, and Security Hub.
 2. generates a CSV report.
 3. uploads report to S3.
 4. calls Amazon Bedrock for AI summary.
 5. sends email via SES.
 
-#### If you're new to Lambda, read [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) from top to bottom, then follow how it imports and calls "helper" modules.
+#### If you're new to Lambda, read ```index.py``` from top to bottom, then follow how it imports and calls "helper" modules.
 
-#### Lamda "helper" modules:
-The ```index.py``` file doesn’t do all the work by itself. It uses "helper" modules from the [```/modules```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
+#### Lambda "helper" modules:
+The [```index.py```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [```/modules```](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
 Each module handles one specific task. 
 <details> <summary>Here’s what the "helper" modules do: (click to expand)</summary>
 
@@ -163,8 +165,7 @@ This project forced me to go beyond deployment and into real AWS troubleshooting
 
 ### AWS security services
 
-- IAM Access Analyzer only works if an analyzer exists.
-- Findings are not retroactive. You must re-run Lambda after config changes.
+- IAM Access Analyzer only starts working after you set it up. It doesn’t look back at old data. So if you change its settings, remember to re-run the Lambda.
 - CloudTrail must log all management events for useful results.
 
 ### Serverless architecture & devops
@@ -199,7 +200,7 @@ If you’d like to try it yourself:
 ## Resources
 
 Original project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
-
+If you’re just starting out, don’t be discouraged by errors. Every problem I hit taught me something new.
 Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 
 ---

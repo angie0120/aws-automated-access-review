@@ -17,9 +17,9 @@
 
 ## About this project
 
-This AWS security tool automates access reviews by collecting findings from IAM Access Analyzer, Security Hub, CloudTrail and more. It converts technical data into actionable compliance reports and AI-generated summaries (from Amazon Bedrock). This project is based on a git clone of [this repo](https://github.com/ajy0127/aws_automated_access_review). 
+This project is an AWS security tool that automates access reviews by collecting findings from IAM Access Analyzer, Security Hub, CloudTrail and more. It converts technical data into actionable compliance reports with AI-generated summaries. The project was cloned from [this repo](https://github.com/ajy0127/aws_automated_access_review). 
 
-This README is not about re-documenting the code from the cloned repo. Instead, it focuses on:
+Rather than re-documenting the original code, this README highlights:
 - My personal learning journey as an AWS beginner.
 - The challenges I faced.
 - How I troubleshot and fixed issues.
@@ -75,7 +75,7 @@ CloudFormation automatically sets up the:
 - Lambda function
 - IAM roles & permissions
 - S3 bucket (for CSV reports)
-- Amazon SES configuration (for emails)
+- SES configuration (for emails)
 - CloudWatch scheduled trigger (runs every 30 days)
 
 Benefit of CloudFormation: repeatable deployments with no manual setup.
@@ -165,8 +165,7 @@ This project forced me to go beyond deployment and into real AWS troubleshooting
 
 ### AWS security services
 
-- IAM Access Analyzer only starts working after you set it up.
-- IAM Access Analyzer doesn’t look back at old data. So if you change its settings, remember to re-run the Lambda.
+- IAM Access Analyzer only works once configured, and it doesn’t look back at old data. If you change its settings, re-run the Lambda to refresh findings.
 - CloudTrail must log all management events for useful results.
 
 ### Serverless architecture & devops

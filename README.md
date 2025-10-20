@@ -37,9 +37,7 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 ## Setup and report output
 
-Set up instructions: [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide).
-
-Don’t worry if the Quick Start Guide feels intimidating. I’ll highlight the beginner pitfalls I hit later in this README.
+Set up instructions: [How to reproduce this project](#How-to-reproduce-this-project)
 
 #### Examples of output after deploying code:
 
@@ -91,7 +89,7 @@ Every time the Lambda runs, it:
 4. calls Amazon Bedrock for AI summary.
 5. sends email via SES.
 
-#### If you're new to Lambda, read `index.py` from top to bottom, then follow how it imports and calls "helper" modules.
+If you're new to Lambda, read `index.py` from top to bottom, then follow how it imports and calls "**helper**" modules.
 
 #### Lambda "helper" modules:
 The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [`/modules`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.

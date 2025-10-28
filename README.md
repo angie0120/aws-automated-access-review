@@ -106,10 +106,10 @@ If you're new to Lambda, read `index.py` from top to bottom, then follow how it 
 The AI summary process is handled by the [`bedrock_integration.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module and connects to Claude 3 Haiku and guides the model to think like a compliance analyst.
 
 Core Functions:
->`prepare_prompt()`: Converts technical findings into GRC-ready evidence summaries
->`invoke_claude_model()`: Sends structured prompt to Amazon Bedrock
->`extract_narrative_claude()`: Extracts AI-written compliance narrative
->`generate_fallback_narrative()`: Provides a compliant fallback when AI is unavailable
+- `prepare_prompt()`: Converts technical findings into GRC-ready evidence summaries
+- `invoke_claude_model()`: Sends structured prompt to Amazon Bedrock
+- `extract_narrative_claude()`: Extracts AI-written compliance narrative
+- `generate_fallback_narrative()`: Provides a compliant fallback when AI is unavailable
 
 This makes reports useful for non-technical readers or executives who need high-level insights, not raw CSVs.
 
@@ -120,8 +120,8 @@ This makes reports useful for non-technical readers or executives who need high-
 These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
-Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
-> **Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
+> Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
+**Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
 
 #### 2. Bedrock model mismatch.
 The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).

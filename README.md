@@ -41,6 +41,11 @@ It bridges the gap between security operations and compliance management by prod
 
 Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) to set up your Python virtual environment, configure your AWS credentials and run the deployment script.
 
+Quick Run Example:
+```bash
+./scripts/run_report.sh --stack-name aws-access-review --region us-east-1 --profile <your-aws-profile>
+```
+
 #### Sample outputs after deploying script:
 
 **1. Sample AI-generated output (sent via email)**:
@@ -116,21 +121,12 @@ This makes reports useful for non-technical readers or executives who need high-
 
 These are the real-world issues I faced while deploying the script and how I solved them:
 
-#### 1. Bash scripts don’t work in PowerShell.
-Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
-> **Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
-
-#### 2. Bedrock model mismatch.
-The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).
-> **Fix**: I updated the model ID in `bedrock_integration.py` to Claude 3 Haiku model.
-
-#### 3. Lambda logging can be misleading sometimes.
-Lambda logs initially showed “IAM Access Analyzer findings collected” even when no findings were returned due to missing analyzer configuration. This required careful reading of both CloudWatch logs and the generated report to discover the inconsistency.
-> **Fix**: I manually created an external access analyzer.
-
-#### 4. CloudTrail returned incomplete findings.
-Only write operations were tracked which led to incomplete findings from the CloudTrail module.
-> **Fix**: I reconfigured CloudTrail to log all management events for more complete analysis.
+| Issue                                    | Root Cause                                        | Resolution                                                           |
+| ---------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------- |
+| **Bash vs PowerShell**                   | Bash scripts not recognized in Windows PowerShell | Installed Git Bash and executed scripts there                        |
+| **Bedrock model mismatch**               | Deprecated model ID caused silent fallback        | Updated to Claude 3 Haiku (`anthropic.claude-3-haiku-20240307-v1:0`) |
+| **Incomplete Access Analyzer findings**  | No active analyzer configured                     | Created external analyzer manually                                   |
+| **CloudTrail missing management events** | Partial logging configuration                     | Re-enabled all management events for full audit coverage             |
 
 With these fixes, my deployment succeeded: reports generated, uploaded to S3, summarized by Bedrock, and emailed via SES.
 
@@ -138,11 +134,23 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ## Compliance Context
 
-| Framework | Relevant Domain                                  |
-| --------- | ------------------------------------------------ |
-| NIST CSF  | PR.AC (Access Control), DE.CM (Monitoring)       |
-| SOC 2     | Security & Confidentiality                       |
-| ISO 27001 | A.9 (Access Control), A.12 (Operations Security) |
+| Framework     | Relevant Domains                                                   | Description                                                                    |
+| ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| **NIST CSF**  | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously |
+| **SOC 2**     | Security, Confidentiality                                          | Provides automated evidence for trust service criteria                         |
+| **ISO 27001** | A.9 (Access Control), A.12 (Operations Security)                   | Demonstrates control validation through automated review                       |
+| **PCI DSS**   | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements                 |
+
+---
+
+## Framework Mapping Table
+
+| AWS Functionality        | Control Type | NIST CSF Mapping      | GRC Relevance                                              |
+| ------------------------ | ------------ | --------------------- | ---------------------------------------------------------- |
+| IAM Access Review        | Preventive   | **PR.AC-1**           | Enforces least privilege access                            |
+| CloudTrail Log Integrity | Detective    | **DE.CM-3 / DE.CM-7** | Monitors personnel activity and unauthorized access        |
+| Security Hub Integration | Detective    | **DE.CM-1 / DE.CM-8** | Centralized continuous monitoring                          |
+| AI Narrative Generation  | Governance   | **ID.GV-1 / ID.RA-1** | Translates technical evidence into governance intelligence |
 
 ---
 
@@ -157,11 +165,13 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ## Skills Demonstrated
 
-- GRC Engineering: Automated control validation and compliance reporting
-- Framework Mapping: NIST CSF, SOC 2, ISO 27001 alignment
-- AI-Augmented Governance: Use of Bedrock to interpret compliance evidence
-- Automation & Evidence Management: Continuous compliance via AWS services
-- Executive Communication: Clear risk summaries for non-technical stakeholders
+| Skill Area                           | Description                                                          |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| **GRC Engineering**                  | Built automated control validation and evidence generation pipelines |
+| **Framework Alignment**              | Mapped findings to NIST CSF, SOC 2, and ISO 27001                    |
+| **AI-Augmented Governance**          | Used Amazon Bedrock to interpret compliance data                     |
+| **Automation & Evidence Management** | Continuous control validation via AWS services                       |
+| **Executive Communication**          | Generated board-ready summaries with risk context                    |
 
 ---
 

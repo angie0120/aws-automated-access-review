@@ -134,12 +134,12 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ## Compliance Context
 
-| Framework     | Relevant Domains                                                   | Description                                                                    |
-| ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| **NIST CSF**  | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously |
-| **SOC 2**     | Security, Confidentiality                                          | Provides automated evidence for trust service criteria                         |
-| **ISO 27001** | A.9 (Access Control), A.12 (Operations Security)                   | Demonstrates control validation through automated review                       |
-| **PCI DSS**   | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements                 |
+| Framework     | Relevant Domains                                                   | Description                                                                                                    |
+| ------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| **NIST CSF**  | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously                                 |
+| **SOC 2**     | Security, Confidentiality                                          | Provides automated evidence for trust service criteria                                                         |
+| **ISO 27001** | A.9 (Access Control), A.12 (Operations Security)                   | Requires organizations to establish an ISMS that includes the continuous monitoring and improvement of controls|
+| **PCI DSS**   | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements                                                 |
 
 ---
 
@@ -147,7 +147,7 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 | AWS Functionality        | Control Type | NIST CSF Mapping      | GRC Relevance                                              |
 | ------------------------ | ------------ | --------------------- | ---------------------------------------------------------- |
-| IAM Access Review        | Preventive   | **PR.AC-1**           | Enforces least privilege access                            |
+| IAM Access Review        | Detective    | **PR.AC-2**           | Enforces least privilege access                            |
 | CloudTrail Log Integrity | Detective    | **DE.CM-3 / DE.CM-7** | Monitors personnel activity and unauthorized access        |
 | Security Hub Integration | Detective    | **DE.CM-1 / DE.CM-8** | Centralized continuous monitoring                          |
 | AI Narrative Generation  | Governance   | **ID.GV-1 / ID.RA-1** | Translates technical evidence into governance intelligence |

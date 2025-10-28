@@ -41,10 +41,11 @@ It bridges the gap between security operations and compliance management by prod
 
 Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) to set up your Python virtual environment, configure your AWS credentials and run the deployment script.
 
-#### Examples of output after deploying script:
+#### Sample outputs after deploying script:
 
 1. Sample AI-generated output (sent via email):
 ![report](./assets/ai-report.png)
+
 
 2. Sample CSV output:
 ![CSVreport](./assets/csv-report.png)
@@ -111,7 +112,7 @@ This makes reports useful for non-technical readers or executives who need high-
 
 ## Key challenges and fixes
 
-These are the real-world issues I faced and how I solved them:
+These are the real-world issues I faced while deploying the script and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
 Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.

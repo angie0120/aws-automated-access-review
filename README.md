@@ -43,11 +43,13 @@ Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_r
 
 #### Sample outputs after deploying script:
 
-1. Sample AI-generated output (sent via email):
+**1. Sample AI-generated output (sent via email)**:
+
 ![report](./assets/ai-report.png)
 
 
-2. Sample CSV output:
+**2. Sample CSV output**:
+
 ![CSVreport](./assets/csv-report.png)
 
 ---

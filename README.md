@@ -46,7 +46,7 @@ Quick Run Example:
 ./scripts/run_report.sh --stack-name aws-access-review --region us-east-1 --profile <your-aws-profile>
 ```
 
-#### Sample outputs after deploying script:
+#### Sample output after deploying script:
 
 **1. Sample AI-generated output (sent via email)**:
 

@@ -1,31 +1,33 @@
-# AWS Automated Access Review (learning edition)
+# AWS Automated Access Review
 
----
-
-## Table of contents
-- [About this project](#about-this-project)
-- [Logic flowchart](#logic-flowchart)
-- [Setup and report output](#setup-and-report-output)
-- [Core building blocks](#core-building-blocks---what-makes-this-project-work)
-- [How it all fits together](#how-it-all-fits-together)
-- [Key challenges](#key-challenges-and-fixes)
-- [What I learned](#what-i-learned)
-- [How to reproduce this project](#how-to-reproduce-this-project)
-- [Resources](#resources)
+AI-powered cloud GRC automation using Amazon Bedrock (Claude 3 Haiku)
 
 ---
 
 ## About this project
 
-This project is an AWS security tool that automates access reviews by collecting findings from IAM Access Analyzer, Security Hub, CloudTrail and more. It converts technical data into actionable compliance reports with AI-generated summaries. The project was cloned from [this repo](https://github.com/ajy0127/aws_automated_access_review). 
+This project demonstrates how Governance, Risk, and Compliance (GRC) engineering can be automated and scaled across AWS environments.
 
-Rather than re-documenting the original code, this README highlights:
-- My personal learning journey as an AWS beginner.
-- The challenges I faced.
-- How I troubleshot and fixed issues.
-- Key concepts and takeaways for others new to AWS.
+The AWS Access Review tool uses Amazon Bedrock’s Claude 3 Haiku model to translate complex technical findings into governance-aligned narratives making it easier for security, compliance, and leadership teams to understand cloud risks and make informed decisions.
 
-My goal is to help beginners avoid the same roadblocks I hit and explain things where the AWS docs can be vague.
+It bridges the gap between security operations and compliance management by producing:
+
+- Structured evidence of control performance
+- AI-generated summaries mapped to frameworks like NIST CSF, SOC 2, and ISO 27001
+- Executive-ready risk narratives for audit reporting and board communication
+
+---
+
+## Overview
+
+| Area                      | Description                                                          |
+| ------------------------- | -------------------------------------------------------------------- |
+| **Purpose**               | Automate AWS access reviews for GRC and compliance readiness         |
+| **Focus**                 | Translate security findings into governance-aligned insights         |
+| **AI Engine**             | Amazon Bedrock: Claude 3 Haiku (Messages API)                        |
+| **Key Outcome**           | CSV of technical evidence + AI-written compliance narrative          |
+| **Compliance Frameworks** | NIST CSF, SOC 2, ISO 27001, PCI DSS                                  |
+| **Tech Stack**            | Python • AWS Lambda • Bedrock • S3 • SES • CloudTrail • Security Hub |
 
 ---
 
@@ -35,11 +37,11 @@ My goal is to help beginners avoid the same roadblocks I hit and explain things 
 
 ---
 
-## Setup and report output
+## Setup, deployment and report output
 
-Set up instructions: [How to reproduce this project](#How-to-reproduce-this-project)
+Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) to set up your Python virtual environment, configure your AWS credentials and run the deployment script.
 
-#### Examples of output after deploying code:
+#### Examples of output after deploying script:
 
 <details> <summary> <strong>Sample AI-generated output (sent via email)</strong> (click to expand)</summary>
 
@@ -55,17 +57,23 @@ Set up instructions: [How to reproduce this project](#How-to-reproduce-this-proj
 
 ---
 
-## Core building blocks - what makes this project work
+## How it works
 
-If you’re new to AWS, focus on these 3 AWS services first:
+1. You deploy the project using the CloudFormation template.
+2. AWS creates all the needed infrastructure for you.
+3. The Lambda function runs on a schedule.
+4. It collects data, generates a report, uses AI to summarize, uploads to S3 and emails the result.
+5. The report is emailed to stakeholders via SES.
+
+All of this is fully automated and there's no need to log into the console once it's deployed.
+
+### The core building blocks 
 
 1. **AWS CloudFormation**: sets up the infrastructure (IaC).
 2. **AWS Lambda**: runs the logic (serverless code execution).
 3. **Amazon Bedrock**: generates human-readable AI summaries.
 
-Once you understand these, the rest falls into place.
-
-### 1. AWS CloudFormation (IaC)
+#### 1. AWS CloudFormation (IaC)
 
 Instead of manually creating AWS resources, CloudFormation defines everything in the YAML template named `access-review-real.yaml`. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
 
@@ -78,7 +86,7 @@ CloudFormation automatically sets up the:
 
 Benefit of CloudFormation: repeatable deployments with no manual setup.
 
-### 2. AWS Lambda (how the code runs)
+#### 2. AWS Lambda (how the code runs)
 
 The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file is where the Lambda function logic lives. This file contains the entry-point function: `def handler(event, context):`
 
@@ -89,47 +97,19 @@ Every time the Lambda runs, it:
 4. calls Amazon Bedrock for AI summary.
 5. sends email via SES.
 
-If you're new to Lambda, read `index.py` from top to bottom, then follow how it imports and calls "**helper**" modules.
+If you're new to Lambda, read `index.py` from top to bottom, then follow how it imports and calls "**helper**" [`/modules`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules). Each module handles one specific task.
 
-#### Lambda "helper" modules:
-The [`index.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) file doesn’t do all the work by itself. It uses "helper" modules from the [`/modules`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda/modules) folder.
-Each module handles one specific task. 
-<details> <summary>Here’s what the "helper" modules do: (click to expand)</summary>
+#### 3. Amazon Bedrock (AI-generated summary)
 
-| Module                        | What it does                                            |
-| ----------------------------- | ------------------------------------------------------- |
-| `iam_findings.py`             | Scans IAM users, roles, and password policies           |
-| `scp_findings.py`             | Reviews Service Control Policies from AWS Organizations |
-| `securityhub_findings.py`     | Pulls findings from AWS Security Hub                    |
-| `access_analyzer_findings.py` | Detects risky external access with IAM Access Analyzer  |
-| `cloudtrail_findings.py`      | Looks for suspicious or missing logs in CloudTrail      |
-| `reporting.py`                | Generates the CSV and uploads it to S3                  |
-| `narrative.py`                | Creates the AI-generated summary using Amazon Bedrock   |
-| `email_utils.py`              | Sends email reports via Amazon SES                      |
-</details>
+The AI summary process is handled by the [`bedrock_integration.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module and connects to Claude 3 Haiku and guides the model to think like a compliance analyst.
 
-### 3. Amazon Bedrock (AI-generated summary)
-
-The AI summary process is handled by the [`bedrock_integration.py`](https://github.com/ajy0127/aws_automated_access_review/tree/main/src/lambda) module. Here's what it does:
-
-- Formats findings into a text prompt.
-- Sends it to the AI model (Claude 3 Haiku).
-- Returns an easy-to-read summary.
-- Falls back to a default if Bedrock fails.
+Core Functions:
+`prepare_prompt()`: Converts technical findings into GRC-ready evidence summaries
+`invoke_claude_model()`: Sends structured prompt to Amazon Bedrock
+`extract_narrative_claude()`: Extracts AI-written compliance narrative
+`generate_fallback_narrative()`: Provides a compliant fallback when AI is unavailable
 
 This makes reports useful for non-technical readers or executives who need high-level insights, not raw CSVs.
-
----
-
-## How it all fits together
-
-1. You deploy the project using the CloudFormation template.
-2. AWS creates all the needed infrastructure for you.
-3. The Lambda function runs on a schedule.
-4. It collects data, generates a report, uses AI to summarize, uploads to S3 and emails the result.
-5. The report is emailed to stakeholders via SES.
-
-All of this is fully automated and there's no need to log into the console once it's deployed.
 
 ---
 
@@ -157,49 +137,38 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ---
 
-## What I learned
+## Compliance Context
 
-This project forced me to go beyond deployment and into real AWS troubleshooting.
-
-### AWS security services
-
-- IAM Access Analyzer only works once configured, and it doesn’t look back at old data. If you change its settings, re-run the Lambda to refresh findings.
-- CloudTrail must log all management events for useful results.
-
-### Serverless architecture & devops
-
-- IaC (CloudFormation) saved me hours during re-testing.
-- CloudWatch Logs are essential to debug:
-    - empty findings
-    - SES email failures
-    - Bedrock integration errors
-
-### Amazon Bedrock (Claude 3)
-
-- Model version mismatches result in silent failures.
-- You must stay current with Bedrock’s available models.
+| Framework | Relevant Domain                                  |
+| --------- | ------------------------------------------------ |
+| NIST CSF  | PR.AC (Access Control), DE.CM (Monitoring)       |
+| SOC 2     | Security & Confidentiality                       |
+| ISO 27001 | A.9 (Access Control), A.12 (Operations Security) |
 
 ---
 
-## How to reproduce this project
+## Governance & Security
 
-If you’d like to try it yourself:
-1. Clone the original repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
-2. Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) in that repo.
-3. Apply these beginner fixes:
-    - Install Git Bash if you’re on Windows.
-    - Create an IAM Access Analyzer first.
-    -  Update Bedrock model ID to Claude 3 Haiku.
-    -  Configure CloudTrail to log all management events.
-4. Check CloudWatch Logs after deployment to confirm everything is working.
+- Evidence stored in S3 with encryption at rest
+- Reports aligned to NIST CSF and SOC 2 control families
+- IAM permissions follow the principle of least privilege
+- AI output audited and traceable for assurance purposes
 
-#### If you’re just starting out, don’t be discouraged by errors. Every problem I hit taught me something new.
+---
+
+## Skills Demonstrated
+
+✅ GRC Engineering: Automated control validation and compliance reporting
+✅ Framework Mapping: NIST CSF, SOC 2, ISO 27001 alignment
+✅ AI-Augmented Governance: Use of Bedrock to interpret compliance evidence
+✅ Automation & Evidence Management: Continuous compliance via AWS services
+✅ Executive Communication: Clear risk summaries for non-technical stakeholders
 
 ---
 
 ## Resources
 
-Original project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
+Project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
 
 Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 

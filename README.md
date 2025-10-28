@@ -67,7 +67,9 @@ Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_r
 
 All of this is fully automated and there's no need to log into the console once it's deployed.
 
-### The core building blocks 
+---
+
+## The core building blocks 
 
 1. **AWS CloudFormation**: sets up the infrastructure (IaC).
 2. **AWS Lambda**: runs the logic (serverless code execution).
@@ -118,8 +120,8 @@ This makes reports useful for non-technical readers or executives who need high-
 These are the real-world issues I faced and how I solved them:
 
 #### 1. Bash scripts don’t work in PowerShell.
-- Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
-- **Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
+Bash commands like `./scripts/deploy.sh` won’t work in PowerShell and will throw an error.
+> **Fix**: I installed [`Git Bash`](https://git-scm.com/download/win) on Windows and ran code in the Git Bash terminal instead of using PowerShell.
 
 #### 2. Bedrock model mismatch.
 - The original code used an older model ID (claude-v2) which failed silently, and the email output was the generic fallback narrative outlined in the [code](https://github.com/ajy0127/aws_automated_access_review/blob/main/src/lambda/bedrock_integration.py).
@@ -158,18 +160,16 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ## Skills Demonstrated
 
-✅ GRC Engineering: Automated control validation and compliance reporting
-✅ Framework Mapping: NIST CSF, SOC 2, ISO 27001 alignment
-✅ AI-Augmented Governance: Use of Bedrock to interpret compliance evidence
-✅ Automation & Evidence Management: Continuous compliance via AWS services
-✅ Executive Communication: Clear risk summaries for non-technical stakeholders
+- GRC Engineering: Automated control validation and compliance reporting
+- Framework Mapping: NIST CSF, SOC 2, ISO 27001 alignment
+- AI-Augmented Governance: Use of Bedrock to interpret compliance evidence
+- Automation & Evidence Management: Continuous compliance via AWS services
+- Executive Communication: Clear risk summaries for non-technical stakeholders
 
 ---
 
 ## Resources
 
 Project repo: [Automated Access Review](https://github.com/ajy0127/aws_automated_access_review).
-
-Big thanks to [AJ Yawn](https://github.com/ajy0127) for making this project open-source and for the opportunity to explore how AWS services work together in a real-world scenario.
 
 ---

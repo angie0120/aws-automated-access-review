@@ -1,6 +1,6 @@
 # AWS Automated Access Review
 
-AI-powered cloud GRC automation using Amazon Bedrock (Claude 3 Haiku)
+Automates AWS access reviews with AI-driven compliance narratives using Amazon Bedrock (Claude 3 Haiku) aligned to NIST CSF and SOC 2.
 
 ---
 
@@ -15,6 +15,9 @@ It bridges the gap between security operations and compliance management by prod
 - Structured evidence of control performance
 - AI-generated summaries mapped to frameworks like NIST CSF, SOC 2, and ISO 27001
 - Executive-ready risk narratives for audit reporting and board communication
+
+> ### Why this matters:
+> Most access review processes are manual and error-prone. This project demonstrates how GRC engineers can use automation and AI to continuously validate access controls and generate audit-ready evidence.
 
 ---
 
@@ -37,7 +40,7 @@ It bridges the gap between security operations and compliance management by prod
 
 ---
 
-## Setup, deployment and report output
+## Quick start & deployment
 
 Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) to set up your Python virtual environment, configure your AWS credentials and run the deployment script.
 
@@ -134,12 +137,12 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 
 ## Compliance Context
 
-| Framework     | Relevant Domains                                                   | Description                                                                                                    |
-| ------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| **NIST CSF**  | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously                                 |
-| **SOC 2**     | Security, Confidentiality                                          | Provides automated evidence for trust service criteria                                                         |
-| **ISO 27001** | A.9 (Access Control), A.12 (Operations Security)                   | Requires organizations to establish an ISMS that includes the continuous monitoring and improvement of controls|
-| **PCI DSS**   | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements                                                 |
+| Framework                                                                   | Relevant Domains                                                   | Description                                                   |
+| --------------------------------------------------------------------------  | ------------------------------------------------------------------ | ------------------------------------------------------------- |
+| **[NIST CSF](https://www.nist.gov/cyberframework)**                         | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously|
+| **[SOC 2](https://www.aicpa.org/soc4so)***                                  | Security, Confidentiality                                          | Provides automated evidence for trust service criteria|
+| **[ISO 27001](https://www.iso.org/isoiec-27001-information-security.html)** | A.9 (Access Control), A.12 (Operations Security)                   | Requires organizations to establish an ISMS that includes the continuous monitoring and improvement of controls|
+| **[PCI DSS](https://www.pcisecuritystandards.org/)**                        | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements|
 
 ---
 

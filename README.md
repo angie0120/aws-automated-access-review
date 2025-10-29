@@ -40,7 +40,7 @@ It bridges the gap between security operations and compliance management by prod
 
 ---
 
-## Quick start & deployment
+## Quick Start & Deployment
 
 Follow the [Quick Start Guide](https://github.com/ajy0127/aws_automated_access_review#quick-start-guide) to set up your Python virtual environment, configure your AWS credentials and run the deployment script.
 
@@ -84,7 +84,7 @@ All of this is fully automated and there's no need to log into the console once 
 
 Instead of manually creating AWS resources, CloudFormation defines everything in the YAML template named `access-review-real.yaml`. The template is found [here](https://github.com/ajy0127/aws_automated_access_review/tree/main/templates).
 
-CloudFormation automatically sets up the:
+CloudFormation automatically provisions the following resources:
 - Lambda function
 - IAM roles & permissions
 - S3 bucket (for CSV reports)
@@ -131,7 +131,7 @@ These are the real-world issues I faced while deploying the script and how I sol
 | **Incomplete Access Analyzer findings**  | No active analyzer configured                     | Created external analyzer manually                                   |
 | **CloudTrail missing management events** | Partial logging configuration                     | Re-enabled all management events for full audit coverage             |
 
-With these fixes, my deployment succeeded: reports generated, uploaded to S3, summarized by Bedrock, and emailed via SES.
+With these fixes, my deployment succeeded: Reports were successfully generated, uploaded to S3, summarized by Bedrock, and emailed via SES.
 
 ---
 
@@ -140,7 +140,7 @@ With these fixes, my deployment succeeded: reports generated, uploaded to S3, su
 | Framework                                                                   | Relevant Domains                                                   | Description                                                   |
 | --------------------------------------------------------------------------  | ------------------------------------------------------------------ | ------------------------------------------------------------- |
 | **[NIST CSF](https://www.nist.gov/cyberframework)**                         | `PR.AC` (Access Control), `DE.CM` (Security Continuous Monitoring) | Validates least-privilege access and monitors control performance continuously|
-| **[SOC 2](https://www.aicpa.org/soc4so)***                                  | Security, Confidentiality                                          | Provides automated evidence for trust service criteria|
+| **[SOC 2](https://www.aicpa.org/soc4so)**                                   | Security, Confidentiality                                          | Provides automated evidence for trust service criteria|
 | **[ISO 27001](https://www.iso.org/isoiec-27001-information-security.html)** | A.9 (Access Control), A.12 (Operations Security)                   | Requires organizations to establish an ISMS that includes the continuous monitoring and improvement of controls|
 | **[PCI DSS](https://www.pcisecuritystandards.org/)**                        | 7.x (Access Control), 10.x (Logging & Monitoring)                  | Supports ongoing access validation and log review requirements|
 
